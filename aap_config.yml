@@ -1,0 +1,50 @@
+---
+- name: Playbook to configure ansible controller (2.5+) post installation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aap_validate_certs: false
+    controller_configuration_secure_logging: false
+    aap_hostname: "{{ AAP_HOST }}"
+    aap_token: "{{ AAP_OAUTH_TOKEN }}"
+  collections:
+    - ansible.platform
+    - infra.aap_configuration
+ 
+  pre_tasks:
+    - name: Include vars from controller configs directory 
+      ansible.builtin.include_vars:
+        dir: group_vars/controller/
+        ignore_files: [platform_config.yml.template]
+        extensions: ["yml"]
+      tags:
+        - always
+    - name: Include vars from gateway configs directory  
+      ansible.builtin.include_vars:
+        dir: group_vars/gateway/
+        ignore_files: [platform_config.yml.template]
+        extensions: ["yml"]
+      tags:
+        - always
+
+  tasks:
+    - name: Call dispatch role
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.dispatch
+
+  roles:
+    # 1: Create Gateway Teams (external identity provider teams)
+    - {role: infra.aap_configuration.gateway_teams, when: gateway_teams is defined}
+
+    # 2: Create Controller Teams (internal AAP teams mapped to gateway teams)
+    - {role: infra.aap_configuration.controller_teams, when: controller_teams is defined}
+
+    # 3: Create Controller Roles (define permissions for teams/users)
+    - {role: infra.aap_configuration.controller_roles, when: controller_roles is defined}
+
+    # 4: Create Controller Projects (organize automation content)
+    - {role: infra.aap_configuration.controller_projects, when: controller_projects is defined}
+
+    # 5: Create Controller Inventories (define hosts for playbooks)
+    - {role: infra.aap_configuration.controller_inventories, when: controller_inventories is defined}

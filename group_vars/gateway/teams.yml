@@ -1,0 +1,14 @@
+---
+controller_teams:
+  - name: Global Team
+    description: Global Team
+    organization: Default
+    wait: false 
+  - name: Security Team
+    description: Security Team
+    organization: Default
+    wait: false 
+  - name: Infrastructure Team
+    description: Infrastructure Team
+    organization: Default
+    wait: false 

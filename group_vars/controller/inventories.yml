@@ -1,0 +1,22 @@
+---
+controller_inventories:
+  - name: "Global Inventory" 
+    organization: Default
+    description: "Example of inventory for Global Team"
+    state: present
+#    wait: 'true'
+
+  - name: "Project 1 Inventory"
+    organization: Default
+    state: present
+#    wait: 'true'
+  
+  - name: "Project 2 Inventory"
+    organization: Default
+    state: present
+#    wait: 'true'
+  
+  - name: "Project 42 Inventory"
+    organization: Default
+    state: absent
+#    wait: 'true'

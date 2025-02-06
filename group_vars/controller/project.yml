@@ -1,0 +1,30 @@
+---
+controller_projects:
+  - name: "Demo Project 1"
+    description: "Demo Project for Project Team 1"
+    organization: "Default"
+    scm_type: git
+    scm_url: https://dev.azure.com/xyz/xyz-aap/_git/aap-deployment
+    credential: "Azure DevOps"
+    scm_branch: main
+    scm_clean: true
+    scm_update_on_launch: true
+    update_project: false
+    wait: true
+    timeout: 600
+    state: present
+  
+  - name: "Demo Project 32"
+    description: "Demo Project for Project Team 32"
+    organization: "Default"
+    scm_type: git
+    scm_url: https://dev.azure.com/xyz/xyz-aap/_git/aap-deployment
+    credential: "Azure DevOps"
+    scm_branch: main
+    scm_clean: true
+    update_project: true
+    scm_update_on_launch: true
+    scm_update_cache_timeout: 300
+    wait: true
+    timeout: 1200
+    state: present
